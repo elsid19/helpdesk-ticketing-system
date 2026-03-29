@@ -133,15 +133,17 @@ On first run, the app automatically creates the SQLite database and seeds sample
 
 ## Screenshots
 
+### Dashboard Overview
+![Dashboard Overview](docs/screenshots/dashboard-overview.png)
+
 ### Ticket Detail (Top)
 ![Ticket Detail Top](docs/screenshots/ticket-detail.png)
 
 ### Ticket Detail (Bottom)
 ![Ticket Detail Bottom](docs/screenshots/ticket-detail-bottom.png)
 
-### Coming Next
-- Dashboard overview screenshot: `docs/screenshots/dashboard-overview.png`
-- Create ticket form screenshot: `docs/screenshots/create-ticket-form.png`
+### Create Ticket Form
+![Create Ticket Form](docs/screenshots/create-ticket-form.png)
 
 ---
 
