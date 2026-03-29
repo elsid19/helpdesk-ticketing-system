@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block title %}{{ ticket.ticket_id }} | Ticket Detail{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <h2>Ticket Detail - {{ ticket.ticket_id }}</h2>
+  <div class="detail-grid">
+    <div><strong>Requester:</strong> {{ ticket.requester_name }}</div>
+    <div><strong>Department:</strong> {{ ticket.department }}</div>
+    <div><strong>Title:</strong> {{ ticket.issue_title }}</div>
+    <div><strong>Category:</strong> {{ ticket.category }}</div>
+    <div><strong>Priority:</strong> <span class="badge priority-{{ ticket.priority|lower|replace(' ', '-') }}">{{ ticket.priority }}</span></div>
+    <div><strong>Status:</strong> <span class="badge status-{{ ticket.status|lower|replace(' ', '-') }}">{{ ticket.status }}</span></div>
+    <div><strong>Assigned Technician:</strong> {{ ticket.assigned_technician or 'Unassigned' }}</div>
+    <div><strong>Created:</strong> {{ ticket.created_at|fmt_dt }}</div>
+    <div><strong>Updated:</strong> {{ ticket.updated_at|fmt_dt }}</div>
+    <div><strong>Resolved:</strong> {{ ticket.resolved_at|fmt_dt }}</div>
+  </div>
+
+  <div class="description-box">
+    <h3>Description</h3>
+    <p>{{ ticket.description }}</p>
+  </div>
+
+  <div class="description-box">
+    <h3>Resolution Notes</h3>
+    <p>{{ ticket.resolution_notes or 'No resolution notes yet.' }}</p>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>Technician Actions</h2>
+  <form method="POST" action="{{ url_for('update_ticket', ticket_pk=ticket.id) }}" class="form-grid">
+    <div>
+      <label for="assigned_technician">Assign Technician</label>
+      <input type="text" id="assigned_technician" name="assigned_technician" value="{{ ticket.assigned_technician }}" placeholder="e.g., Tech Alex" />
+    </div>
+
+    <div>
+      <label for="priority">Change Priority</label>
+      <select id="priority" name="priority">
+        {% for priority in priority_options %}
+          <option value="{{ priority }}" {% if priority == ticket.priority %}selected{% endif %}>{{ priority }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="status">Change Status</label>
+      <select id="status" name="status">
+        {% for status in status_options %}
+          <option value="{{ status }}" {% if status == ticket.status %}selected{% endif %}>{{ status }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="note_author">Note Author</label>
+      <input type="text" id="note_author" name="note_author" placeholder="Technician name" />
+    </div>
+
+    <div class="full-width">
+      <label for="note_text">Internal Note (append)</label>
+      <textarea id="note_text" name="note_text" rows="4" placeholder="Add troubleshooting step, findings, or next action..."></textarea>
+    </div>
+
+    <div class="full-width">
+      <label for="resolution_notes">Resolution Notes</label>
+      <textarea id="resolution_notes" name="resolution_notes" rows="4" placeholder="Describe final fix and verification steps..."></textarea>
+    </div>
+
+    <div class="full-width form-actions">
+      <button type="submit">Save Updates</button>
+      <a class="btn-secondary" href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>Technician Notes History</h2>
+  {% if notes %}
+    <ul class="timeline">
+      {% for note in notes %}
+        <li>
+          <div><strong>{{ note.author }}</strong> · {{ note.created_at|fmt_dt }}</div>
+          <p>{{ note.note_text }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No technician notes yet.</p>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <h2>Audit Log</h2>
+  {% if audit_logs %}
+    <ul class="timeline">
+      {% for item in audit_logs %}
+        <li>
+          <div><strong>{{ item.action }}</strong> · {{ item.created_at|fmt_dt }}</div>
+          <p>{{ item.details or '-' }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No audit entries yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

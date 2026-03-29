@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Create Ticket | Help Desk Ticketing Simulator{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <h2>Create New Ticket</h2>
+  <form method="POST" class="form-grid">
+    <div>
+      <label for="requester_name">Requester Name *</label>
+      <input type="text" id="requester_name" name="requester_name" required />
+    </div>
+
+    <div>
+      <label for="department">Department *</label>
+      <input type="text" id="department" name="department" required />
+    </div>
+
+    <div class="full-width">
+      <label for="issue_title">Issue Title *</label>
+      <input type="text" id="issue_title" name="issue_title" required />
+    </div>
+
+    <div class="full-width">
+      <label for="description">Description *</label>
+      <textarea id="description" name="description" rows="5" required></textarea>
+    </div>
+
+    <div>
+      <label for="category">Category *</label>
+      <select id="category" name="category" required>
+        <option value="">Select category</option>
+        {% for category in category_options %}
+          <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="priority">Priority *</label>
+      <select id="priority" name="priority" required>
+        <option value="">Select priority</option>
+        {% for priority in priority_options %}
+          <option value="{{ priority }}">{{ priority }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="full-width form-actions">
+      <button type="submit">Create Ticket</button>
+      <a class="btn-secondary" href="{{ url_for('dashboard') }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

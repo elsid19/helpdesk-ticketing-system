@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | Help Desk Ticketing Simulator{% endblock %}
+
+{% block content %}
+<section class="metrics-grid">
+  <div class="metric-card"><h3>Total Tickets</h3><p>{{ metrics.total }}</p></div>
+  <div class="metric-card"><h3>Open Tickets</h3><p>{{ metrics.open }}</p></div>
+  <div class="metric-card"><h3>In Progress</h3><p>{{ metrics.in_progress }}</p></div>
+  <div class="metric-card"><h3>Resolved</h3><p>{{ metrics.resolved }}</p></div>
+  <div class="metric-card"><h3>High Priority</h3><p>{{ metrics.high_priority }}</p></div>
+</section>
+
+<section class="panel">
+  <h2>Filter and Search</h2>
+  <form method="GET" class="filters" id="filterForm">
+    <div>
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="">All</option>
+        {% for s in status_options %}
+          <option value="{{ s }}" {% if s == status_filter %}selected{% endif %}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority">
+        <option value="">All</option>
+        {% for p in priority_options %}
+          <option value="{{ p }}" {% if p == priority_filter %}selected{% endif %}>{{ p }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="search-group">
+      <label for="q">Search (title or requester)</label>
+      <input id="q" name="q" type="text" placeholder="e.g., Outlook or Ava" value="{{ search_query }}" />
+    </div>
+
+    <div class="filter-actions">
+      <button type="submit">Apply</button>
+      <a class="btn-secondary" href="{{ url_for('dashboard') }}">Reset</a>
+    </div>
+  </form>
+</section>
+
+<section class="panel">
+  <h2>Tickets</h2>
+  {% if tickets %}
+    <div class="table-wrapper">
+      <table id="ticketsTable">
+        <thead>
+          <tr>
+            <th>Ticket ID</th>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Assigned Technician</th>
+            <th>Created Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for ticket in tickets %}
+          <tr>
+            <td>{{ ticket.ticket_id }}</td>
+            <td>{{ ticket.issue_title }}</td>
+            <td>{{ ticket.category }}</td>
+            <td><span class="badge priority-{{ ticket.priority|lower|replace(' ', '-') }}">{{ ticket.priority }}</span></td>
+            <td><span class="badge status-{{ ticket.status|lower|replace(' ', '-') }}">{{ ticket.status }}</span></td>
+            <td>{{ ticket.assigned_technician or 'Unassigned' }}</td>
+            <td>{{ ticket.created_at|fmt_dt }}</td>
+            <td><a href="{{ url_for('ticket_detail', ticket_pk=ticket.id) }}">View</a></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No tickets found for the selected filters.</p>
+  {% endif %}
+</section>
+{% endblock %}
