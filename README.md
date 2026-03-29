@@ -63,7 +63,7 @@ The app is designed to be easy to run locally and easy to explain in interviews.
 ### 6) Data Persistence + Seed Data
 - SQLite database
 - Auto schema creation on first run
-- 10 realistic sample IT tickets preloaded
+- 12 realistic sample IT tickets preloaded
 
 ### Bonus
 - CSV export of all tickets
@@ -131,36 +131,31 @@ On first run, the app automatically creates the SQLite database and seeds sample
 
 ---
 
-## Screenshots (Placeholders)
+## Screenshots
 
-Placeholder files are included in `docs/screenshots/`:
+### Ticket Detail (Top)
+![Ticket Detail Top](docs/screenshots/ticket-detail.png)
 
-- `dashboard-overview.png`
-- `ticket-detail.png`
-- `create-ticket-form.png`
+### Ticket Detail (Bottom)
+![Ticket Detail Bottom](docs/screenshots/ticket-detail-bottom.png)
 
-Replace them with real screenshots and keep the same filenames for clean README rendering.
-
-Example markdown:
-
-```md
-![Dashboard](docs/screenshots/dashboard-overview.png)
-![Ticket Detail](docs/screenshots/ticket-detail.png)
-![Create Ticket](docs/screenshots/create-ticket-form.png)
-```
+### Coming Next
+- Dashboard overview screenshot: `docs/screenshots/dashboard-overview.png`
+- Create ticket form screenshot: `docs/screenshots/create-ticket-form.png`
 
 ---
 
 ## Sample Tickets Included
 
-The database seeds 10 realistic tickets such as:
-- Wi-Fi not connecting
-- Outlook not syncing
-- Password reset request
-- Printer offline
-- VPN connection failure
-- Slow computer performance
-- Software installation request
+The database seeds 12 realistic tickets, including:
+- User cannot connect to corporate Wi-Fi (SSID not visible)
+- Outlook stuck in offline mode (OST sync issue)
+- VPN fails with authentication error (AAD/credentials)
+- Printer offline on Windows 11 (spooler/service)
+- Account locked after multiple failed logins (AD policy)
+- Shared drive access denied after group policy refresh
+- MFA prompt not received on company phone
+- New hire cannot access Salesforce
 
 These help you demo triage logic, ticket lifecycle updates, and support documentation.
 
