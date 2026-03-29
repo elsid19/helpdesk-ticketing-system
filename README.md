@@ -133,19 +133,20 @@ On first run, the app automatically creates the SQLite database and seeds sample
 
 ## Screenshots (Placeholders)
 
-Add screenshots in `docs/screenshots/` and update links below:
+Placeholder files are included in `docs/screenshots/`:
 
-1. Dashboard view with metrics cards
-2. Ticket creation form
-3. Ticket detail with technician notes
-4. Status update + resolution flow
-5. Filter/search example
+- `dashboard-overview.png`
+- `ticket-detail.png`
+- `create-ticket-form.png`
+
+Replace them with real screenshots and keep the same filenames for clean README rendering.
 
 Example markdown:
 
 ```md
-![Dashboard](docs/screenshots/dashboard.png)
+![Dashboard](docs/screenshots/dashboard-overview.png)
 ![Ticket Detail](docs/screenshots/ticket-detail.png)
+![Create Ticket](docs/screenshots/create-ticket-form.png)
 ```
 
 ---
