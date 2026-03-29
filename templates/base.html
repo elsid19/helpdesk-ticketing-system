@@ -32,6 +32,12 @@
     {% block content %}{% endblock %}
   </main>
 
+  <footer class="site-footer">
+    <div class="container">
+      Last updated: {{ last_updated_label }}
+    </div>
+  </footer>
+
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

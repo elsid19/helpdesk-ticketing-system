@@ -330,13 +330,19 @@ def initialize_database():
     db.close()
 
 
+@app.context_processor
+def inject_layout_context():
+    return {"last_updated_label": datetime.now().strftime("%b %d, %Y %I:%M %p")}
+
+
 @app.route("/")
 def dashboard():
     db = get_db()
 
-    status_filter = request.args.get("status", "")
-    priority_filter = request.args.get("priority", "")
+    status_filter = normalize_enum(request.args.get("status", ""), STATUS_FLOW) or ""
+    priority_filter = normalize_enum(request.args.get("priority", ""), PRIORITY_OPTIONS) or ""
     search_query = request.args.get("q", "").strip()
+    sort_order = request.args.get("sort", "newest")
 
     where_clauses = []
     params = []
@@ -357,7 +363,12 @@ def dashboard():
     query = "SELECT * FROM tickets"
     if where_clauses:
         query += " WHERE " + " AND ".join(where_clauses)
-    query += " ORDER BY created_at DESC"
+
+    if sort_order == "oldest":
+        query += " ORDER BY created_at ASC"
+    else:
+        sort_order = "newest"
+        query += " ORDER BY created_at DESC"
 
     tickets = db.execute(query, params).fetchall()
 
@@ -378,6 +389,7 @@ def dashboard():
         status_filter=status_filter,
         priority_filter=priority_filter,
         search_query=search_query,
+        sort_order=sort_order,
         status_options=STATUS_FLOW,
         priority_options=PRIORITY_OPTIONS,
     )

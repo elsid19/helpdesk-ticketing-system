@@ -21,6 +21,13 @@ body {
   margin-bottom: 20px;
 }
 
+.site-footer {
+  margin-top: 20px;
+  padding: 14px 0 24px;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
 .header-row {
   display: flex;
   justify-content: space-between;
@@ -127,6 +134,15 @@ table {
   min-width: 850px;
 }
 
+.ticket-link {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.ticket-link:hover {
+  text-decoration: underline;
+}
+
 th, td {
   border-bottom: 1px solid #e5e7eb;
   padding: 10px;
@@ -231,6 +247,22 @@ button:hover {
   margin-bottom: 10px;
   background: #f8fafc;
   border-radius: 6px;
+}
+
+.empty-state {
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  background: #f8fafc;
+  padding: 18px;
+}
+
+.empty-state h3 {
+  margin: 0 0 6px;
+}
+
+.empty-state p {
+  margin: 0;
+  color: #475569;
 }
 
 @media (max-width: 700px) {
